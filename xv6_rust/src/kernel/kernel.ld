@@ -11,11 +11,11 @@ SECTIONS
 
   .text : {
     *(.text .text.*)
-    . = ALIGN(4k);
+    . = ALIGN(0x1000);
     _trampoline = .;
-    *(trampsec)
-    . = ALIGN(4k);
-    ASSERT(. - _trampoline != 4k, "error: trampoline larger than one page");
+    *(.trampsec);
+    . = ALIGN(0x1000);
+    ASSERT(. - _trampoline == 0x1000, "error: trampoline larger than one page");
     PROVIDE(etext = .);
   }
 
